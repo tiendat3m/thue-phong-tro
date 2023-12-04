@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import logo from '../../assets/logo.png'
 import icons from '~/utils/icons'
 import { Button } from '..'
@@ -8,6 +8,9 @@ import { NavLink } from 'react-router-dom'
 
 const { FaHeartCirclePlus, FaSignInAlt, FaUserPlus, AiOutlinePlusCircle } = icons
 const Header = ({ navigate }) => {
+    const goLogin = useCallback((flag) => {
+        navigate(path.LOGIN, { state: { flag } })
+    }, [])
     return (
         <div className='w-main mx-auto flex items-center justify-between h-[70px]'>
             <NavLink to={'/'}>
@@ -18,11 +21,11 @@ const Header = ({ navigate }) => {
                     <FaHeartCirclePlus size={20} />
                     <span>Yêu thích</span>
                 </span>
-                <span onClick={e => navigate(`/${path.LOGIN}`)} className='flex items-center gap-1 hover:underline cursor-pointer'>
+                <span onClick={e => goLogin(false)} className='flex items-center gap-1 hover:underline cursor-pointer'>
                     <FaUserPlus size={20} />
                     <span>Đăng nhập</span>
                 </span>
-                <span onClick={e => navigate(`/${path.LOGIN}`)} className='flex items-center gap-1 hover:underline cursor-pointer' >
+                <span onClick={e => goLogin(true)} className='flex items-center gap-1 hover:underline cursor-pointer' >
                     <FaSignInAlt size={20} />
                     <span>Đăng kí</span>
                 </span>
