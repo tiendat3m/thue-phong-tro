@@ -1,11 +1,21 @@
 import clsx from 'clsx'
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Button, InputForm } from '~/components'
 import withBaseComponent from '~/hocs/withBaseComponent'
+import { apiRegister } from '~/services/auth'
 
 const Login = ({ location }) => {
     const [isRegister, setIsRegister] = useState(location.state?.flag)
+    const [payload, setPayload] = useState({
+        name: '',
+        phone: '',
+        password: '',
+
+    })
+    const handleSubmit = async () => {
+        const response = await apiRegister(payload)
+        console.log(response)
+    }
     useEffect(() => {
         setIsRegister(location.state?.flag)
     }, [location.state?.flag])
@@ -14,15 +24,15 @@ const Login = ({ location }) => {
             <h3 className='font-semibold text-2xl mb-4'>{isRegister ? 'Đăng kí tài khoản' : 'Đăng nhập'}</h3>
             <div className='w-full flex flex-col gap-5'>
                 {isRegister && <InputForm
-                    label={'Họ tên'}
+                    label={'Họ tên'} value={payload.name} setValue={setPayload} type={'name'}
                 />}
                 <InputForm
-                    label={'Số điện thoại'}
+                    label={'Số điện thoại'} value={payload.phone} setValue={setPayload} type={'phone'}
                 />
                 <InputForm
-                    label={'Mật khẩu'}
+                    label={'Mật khẩu'} value={payload.password} setValue={setPayload} type={'password'}
                 />
-                <Button fw>
+                <Button fw handleOnclick={handleSubmit}>
                     {isRegister ? 'Đăng kí' : 'Đăng nhập'}
                 </Button>
 

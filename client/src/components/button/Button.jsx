@@ -5,7 +5,7 @@ const Button = ({ children, handleOnclick, fw, type = 'button', style }) => {
         <button
             type={type}
             className={style ? style : `p-[10px] hover:underline flex justify-center items-center gap-1 bg-secondary rounded-md text-white outline-non ${fw ? 'w-full' : 'w-fit'}`}
-            onClick={handleOnclick && handleOnclick()}
+            onClick={handleOnclick}
         >
             {children}
         </button>
