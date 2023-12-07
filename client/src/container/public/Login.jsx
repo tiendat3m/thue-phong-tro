@@ -1,20 +1,50 @@
 import clsx from 'clsx'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Button, InputForm } from '~/components'
 import withBaseComponent from '~/hocs/withBaseComponent'
-import { apiRegister } from '~/services/auth'
+import * as actions from '~/store/actions'
+import { validate } from '~/utils/helpers'
 
-const Login = ({ location }) => {
+const Login = ({ location, dispatch, navigate }) => {
     const [isRegister, setIsRegister] = useState(location.state?.flag)
+    const { isLoggedIn } = useSelector(state => state.auth)
+    console.log(isLoggedIn)
+    const [invalidFields, setInvalidFields] = useState('')
     const [payload, setPayload] = useState({
         name: '',
         phone: '',
         password: '',
-
     })
+    const resetPayload = () => {
+        setPayload({
+            name: '',
+            phone: '',
+            password: '',
+        })
+    }
+    useEffect(() => {
+        isLoggedIn && navigate('/')
+    }, [isLoggedIn])
+    useEffect(() => {
+        resetPayload()
+        setInvalidFields([])
+    }, [isRegister])
     const handleSubmit = async () => {
-        const response = await apiRegister(payload)
-        console.log(response)
+        // isRegister ? dispatch(actions.register(payload)) : dispatch(actions.login(payload))
+        let finalPayload = isRegister ? payload : {
+            phone: payload.phone,
+            password: payload.password
+        }
+        const invalids = validate(finalPayload, setInvalidFields)
+        // console.log(invalids)
+        if (invalids === 0) {
+            if (isRegister) {
+                dispatch(actions.register(payload))
+            } else {
+                dispatch(actions.login(payload))
+            }
+        }
     }
     useEffect(() => {
         setIsRegister(location.state?.flag)
@@ -24,13 +54,28 @@ const Login = ({ location }) => {
             <h3 className='font-semibold text-2xl mb-4'>{isRegister ? 'Đăng kí tài khoản' : 'Đăng nhập'}</h3>
             <div className='w-full flex flex-col gap-5'>
                 {isRegister && <InputForm
-                    label={'Họ tên'} value={payload.name} setValue={setPayload} type={'name'}
+                    label={'Họ tên'}
+                    value={payload.name}
+                    setValue={setPayload}
+                    type={'name'}
+                    invalidFields={invalidFields}
+                    setInvalidFields={setInvalidFields}
                 />}
                 <InputForm
-                    label={'Số điện thoại'} value={payload.phone} setValue={setPayload} type={'phone'}
+                    label={'Số điện thoại'}
+                    value={payload.phone}
+                    setValue={setPayload}
+                    type={'phone'}
+                    invalidFields={invalidFields}
+                    setInvalidFields={setInvalidFields}
                 />
                 <InputForm
-                    label={'Mật khẩu'} value={payload.password} setValue={setPayload} type={'password'}
+                    label={'Mật khẩu'}
+                    value={payload.password}
+                    setValue={setPayload}
+                    type={'password'}
+                    invalidFields={invalidFields}
+                    setInvalidFields={setInvalidFields}
                 />
                 <Button fw handleOnclick={handleSubmit}>
                     {isRegister ? 'Đăng kí' : 'Đăng nhập'}

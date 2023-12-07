@@ -4,3 +4,9 @@ export const apiRegister = (payload) => axios({
     method: 'post',
     data: payload
 })
+
+export const apiLogin = (payload) => axios({
+    url: '/api/v1/auth/login',
+    method: 'post',
+    data: payload
+})
