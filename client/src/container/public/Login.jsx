@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
 import { Button, InputForm } from '~/components'
 import withBaseComponent from '~/hocs/withBaseComponent'
 import * as actions from '~/store/actions'
@@ -8,8 +9,8 @@ import { validate } from '~/utils/helpers'
 
 const Login = ({ location, dispatch, navigate }) => {
     const [isRegister, setIsRegister] = useState(location.state?.flag)
-    const { isLoggedIn } = useSelector(state => state.auth)
-    console.log(isLoggedIn)
+    const { isLoggedIn, msg, update } = useSelector(state => state.auth)
+    console.log(msg)
     const [invalidFields, setInvalidFields] = useState('')
     const [payload, setPayload] = useState({
         name: '',
@@ -23,6 +24,10 @@ const Login = ({ location, dispatch, navigate }) => {
             password: '',
         })
     }
+    useEffect(() => {
+        msg && Swal.fire('Opps!', msg, 'error')
+    }, [msg, update])
+
     useEffect(() => {
         isLoggedIn && navigate('/')
     }, [isLoggedIn])
@@ -41,6 +46,9 @@ const Login = ({ location, dispatch, navigate }) => {
         if (invalids === 0) {
             if (isRegister) {
                 dispatch(actions.register(payload))
+                Swal.fire('Congrats!', msg, 'success').then(() => {
+                    setIsRegister(false)
+                })
             } else {
                 dispatch(actions.login(payload))
             }
@@ -57,7 +65,7 @@ const Login = ({ location, dispatch, navigate }) => {
                     label={'Họ tên'}
                     value={payload.name}
                     setValue={setPayload}
-                    type={'name'}
+                    namekey={'name'}
                     invalidFields={invalidFields}
                     setInvalidFields={setInvalidFields}
                 />}
@@ -65,7 +73,7 @@ const Login = ({ location, dispatch, navigate }) => {
                     label={'Số điện thoại'}
                     value={payload.phone}
                     setValue={setPayload}
-                    type={'phone'}
+                    namekey={'phone'}
                     invalidFields={invalidFields}
                     setInvalidFields={setInvalidFields}
                 />
@@ -73,9 +81,10 @@ const Login = ({ location, dispatch, navigate }) => {
                     label={'Mật khẩu'}
                     value={payload.password}
                     setValue={setPayload}
-                    type={'password'}
+                    namekey={'password'}
                     invalidFields={invalidFields}
                     setInvalidFields={setInvalidFields}
+                    type='password'
                 />
                 <Button fw handleOnclick={handleSubmit}>
                     {isRegister ? 'Đăng kí' : 'Đăng nhập'}
