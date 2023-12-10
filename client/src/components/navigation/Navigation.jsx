@@ -8,7 +8,6 @@ const active = 'px-4 h-full flex items-center bg-secondary'
 
 const Navigation = () => {
     const [categories, setCategories] = useState(null);
-    console.log(categories)
     const fetchCategories = async () => {
         const response = await apiGetCategories()
         if (response.data.err === 0) {

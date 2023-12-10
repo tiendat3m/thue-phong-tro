@@ -1,6 +1,6 @@
 const path = {
     HOME: '/*',
-    ALL: '*',
+    HOMEPAGE: '*',
     LOGIN: 'login',
     CHO_THUE_CAN_HO: 'cho-thue-can-ho',
     CHO_THUE_PHONG_TRO: 'cho-thue-phong-tro',
