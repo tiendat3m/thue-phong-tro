@@ -4,8 +4,6 @@ import initRoutes from './src/routes'
 import connectDatabase from './src/config/connectDatabase'
 import { generateCode } from './src/utils/generateCode'
 require('dotenv').config()
-
-
 const app = express()
 
 app.use(cors({
