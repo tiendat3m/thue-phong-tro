@@ -20,3 +20,14 @@ export const location = [
         image: 'https://phongtro123.com/images/location_dn.jpg'
     },
 ]
+
+export const arrange = [
+    {
+        id: 1,
+        name: 'Mặc định'
+    },
+    {
+        id: 2,
+        name: 'Mới nhất'
+    },
+]

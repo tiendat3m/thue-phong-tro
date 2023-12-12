@@ -1,4 +1,6 @@
+import icons from "./icons"
 
+const { AiFillStar, AiOutlineStar } = icons
 
 export const validate = (payload, setInvalidFields) => {
     let invalids = 0
@@ -46,5 +48,16 @@ export const formatVietnameseToString = (keyword) => {
         .replace(/[\u0300-\u036f]/g, "")
         .split(" ")
         .join("")
+}
+
+export const renderStarFromNumber = (number, size, className) => {
+    if (!Number(number)) return
+
+    const stars = []
+    number = Math.round(number)
+    for (let i = 0; i < +number; i++) stars.push(<AiFillStar color='#f1b400' size={size || 16} className={className} />)
+    // for (let i = 5; i > +number; i--) stars.push(<AiOutlineStar color="f1b400" size={size || 16} />)
+
+    return stars
 }
 
