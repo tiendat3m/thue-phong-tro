@@ -1,25 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import icons from '~/utils/icons'
 import { Button } from '..'
 
-const images = [
-    "https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/6310726d-d075-4e35-b1cb-cf5616bf5212_1658240491.jpg",
-    "https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/9c60836e-26b2-4737-a6c8-60cb5187fa4c_1658240485.jpg",
-    "https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/716c753e-8e03-4cc8-9d09-e52ec19ce01b_1658240485.jpg",
-    "https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/400e7ebd-5d88-48af-8599-0d074a1ee014_1658240494.jpg",
-]
-
+// const images = [
+//     "https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/6310726d-d075-4e35-b1cb-cf5616bf5212_1658240491.jpg",
+//     "https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/9c60836e-26b2-4737-a6c8-60cb5187fa4c_1658240485.jpg",
+//     "https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/716c753e-8e03-4cc8-9d09-e52ec19ce01b_1658240485.jpg",
+//     "https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/400e7ebd-5d88-48af-8599-0d074a1ee014_1658240494.jpg",
+// ]
+const indexs = [1, 2, 3, 4]
 const { RiHeartFill, RiHeartLine, BsBookmarkStarFill, RiStarFill } = icons
 
-const ListItem = () => {
+const ListItem = ({ images, title, star, address, attributes, user, description }) => {
+    const [isHover, setIsHover] = useState(false)
+    console.log(attributes)
     return (
         <div className='border-t-2 border-orange-600'>
             <div className='w-full flex gap-2 p-4'>
-                <div className='w-2/5 flex flex-wrap gap-[3px] items-center'>
-                    <img src={images[0]} alt="preview" className='w-[140px] h-[120px] object-cover' />
+                <div className='w-2/5 flex flex-wrap gap-[3px] items-center relative cursor-pointer'>
+                    {images.length > 0 && images.filter((i, idx) => indexs.some(i => i === idx))?.map((i, index) => (
+                        <img key={index} src={i} alt="" className='w-[140px] h-[120px] object-cover' />
+                    ))}
+                    {/* <img src={images[0]} alt="preview" className='w-[140px] h-[120px] object-cover' />
                     <img src={images[1]} alt="preview" className='w-[140px] h-[120px] object-cover' />
                     <img src={images[2]} alt="preview" className='w-[140px] h-[120px] object-cover' />
-                    <img src={images[3]} alt="preview" className='w-[140px] h-[120px] object-cover' />
+                    <img src={images[3]} alt="preview" className='w-[140px] h-[120px] object-cover' /> */}
+                    <span className='absolute bottom-2 left-2 px-2 bg-overlay-70 rounded-md text-white text-sm'>{`${images.length} ảnh`}</span>
+                    <span
+                        className='absolute bottom-2 right-3 rounded-md text-white'
+                        onMouseEnter={() => setIsHover(true)}
+                        onMouseLeave={() => setIsHover(false)}
+                    >
+                        {isHover ? <RiHeartFill color='red' size={24} /> : <RiHeartLine size={24} />}
+                    </span>
                 </div>
                 <div className='w-3/5 flex flex-col gap-5'>
                     <div className='flex justify-between gap-4'>
@@ -29,30 +42,30 @@ const ListItem = () => {
                             <RiStarFill className='star-item' size={18} color='yellow' />
                             <RiStarFill className='star-item' size={18} color='yellow' />
                             <RiStarFill className='star-item' size={18} color='yellow' />
-                            CHO THUÊ PHÒNG TRỌ ĐẸP GIÁ ƯU ĐÃI THÁNG 12 TẠI QUẬN GÒ VẤP
+                            {title.toUpperCase()}
                         </div>
                         <div>
                             <BsBookmarkStarFill size={22} color='orange' />
                         </div>
                     </div>
                     <div className='inline-block text-sm'>
-                        <span className='text-[#16c784] font-semibold mr-5'>3 triệu/tháng</span>
-                        <span className='mr-5'>18m²</span>
-                        <span>Quận Gò Vấp, Hồ Chí Minh</span>
+                        <span className='text-[#16c784] font-semibold mr-5'>{attributes?.price}</span>
+                        <span className='mr-5'>{attributes.acreage}</span>
+                        <span>{address}</span>
                     </div>
                     <p className='text-sm text-gray-400'>
-                        ƯU ĐÃI PHÒNG MỚI SHOCK: TẶNG 1 TRIỆU TRONG THÁNG 12 KHI DỌN VÀO PHÒNG MỚI TẠI 35 ĐƯỜNG 27, P.6, GÒ VẤPCho thuê căn hộ dịch vụ - phù hợp người đi làm,…
+                        {description}
                     </p>
                     <div className='flex justify-between  '>
                         <div className='flex gap-2 items-center'>
                             <img src="https://phongtro123.com/images/default-user.png" alt="" className='w-[30px] h-[30px] object-cover rounded-full' />
-                            <p className='text-sm text-gray-400'>Nguyễn Huy Hoàn</p>
+                            <p className='text-sm text-gray-400'>{user.name}</p>
                         </div>
                         <div className='flex gap-2 text-[14px]'>
                             <Button style={'px-[7px] py-[3px] bg-main rounded-md text-white'}>
-                                Gọi 0343759130
+                                {`Gọi ${user.phone}`}
                             </Button>
-                            <Button style={'px-[7px] py-[3px] border border-main rounded-md text-main'}>
+                            <Button style={'px-[7px] py-[3px] border border-main rounded-md text-main hover:bg-main hover:text-white'}>
                                 Nhắn zalo
                             </Button>
                         </div>

@@ -4,7 +4,7 @@ import path from './utils/path'
 import { Home, HomePage, Login, RentalApartment, RentalHouse, RentalMotel, RentalSpace } from './container/public'
 const App = () => {
     return (
-        <div className='h-screen bg-gray-100 font-main'>
+        <div className='bg-gray-100 font-main'>
             <Routes>
                 <Route path={path.HOME} element={<Home />}>
                     <Route path={path.HOMEPAGE} element={<HomePage />} />

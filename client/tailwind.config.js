@@ -15,7 +15,8 @@ export default {
       backgroundColor: {
         main: '#1266dd',
         secondary: '#f73859',
-        overlay: 'rgba(0,0,0,0.3)',
+        'overlay-30': 'rgba(0,0,0,0.3)',
+        'overlay-70': 'rgba(0,0,0,0.7)',
       },
       textColor: {
         main: '#1266dd',
