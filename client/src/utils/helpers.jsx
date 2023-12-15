@@ -50,14 +50,13 @@ export const formatVietnameseToString = (keyword) => {
         .join("")
 }
 
-export const renderStarFromNumber = (number, size, className) => {
+export const renderStarFromNumber = (number, size) => {
     if (!Number(number)) return
 
     const stars = []
     number = Math.round(number)
-    for (let i = 0; i < +number; i++) stars.push(<AiFillStar color='#f1b400' size={size || 16} className={className} />)
+    for (let i = 0; i < +number; i++) stars.push(<AiFillStar color='yellow' size={size || 16} className="star-item" />)
     // for (let i = 5; i > +number; i--) stars.push(<AiOutlineStar color="f1b400" size={size || 16} />)
 
     return stars
 }
-

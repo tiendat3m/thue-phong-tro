@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import icons from '~/utils/icons'
 import { Button } from '..'
+import { renderStarFromNumber } from '~/utils/helpers'
 
 // const images = [
 //     "https://pt123.cdn.static123.com/images/thumbs/900x600/fit/2022/07/19/6310726d-d075-4e35-b1cb-cf5616bf5212_1658240491.jpg",
@@ -13,7 +14,6 @@ const { RiHeartFill, RiHeartLine, BsBookmarkStarFill, RiStarFill } = icons
 
 const ListItem = ({ images, title, star, address, attributes, user, description }) => {
     const [isHover, setIsHover] = useState(false)
-    console.log(attributes)
     return (
         <div className='border-t-2 border-orange-600'>
             <div className='w-full flex gap-2 p-4'>
@@ -34,34 +34,36 @@ const ListItem = ({ images, title, star, address, attributes, user, description 
                         {isHover ? <RiHeartFill color='red' size={24} /> : <RiHeartLine size={24} />}
                     </span>
                 </div>
-                <div className='w-3/5 flex flex-col gap-5'>
-                    <div className='flex justify-between gap-4'>
+                <div className='w-3/5'>
+                    <div className='flex justify-between gap-4 w-full'>
                         <div className='text-red-500 font-semibold text-sm hover:underline cursor-pointer'>
+                            {/* <RiStarFill className='star-item' size={18} color='yellow' />
                             <RiStarFill className='star-item' size={18} color='yellow' />
                             <RiStarFill className='star-item' size={18} color='yellow' />
                             <RiStarFill className='star-item' size={18} color='yellow' />
-                            <RiStarFill className='star-item' size={18} color='yellow' />
-                            <RiStarFill className='star-item' size={18} color='yellow' />
+                            <RiStarFill className='star-item' size={18} color='yellow' /> */}
+                            {renderStarFromNumber(star)}
                             {title.toUpperCase()}
                         </div>
                         <div>
                             <BsBookmarkStarFill size={22} color='orange' />
                         </div>
                     </div>
-                    <div className='inline-block text-sm'>
-                        <span className='text-[#16c784] font-semibold mr-5'>{attributes?.price}</span>
-                        <span className='mr-5'>{attributes.acreage}</span>
-                        <span>{address}</span>
+                    <div className='my-2 flex items-center justify-between gap-2'>
+                        <span className='text-[#16c784] font-semibold'>{attributes?.price}</span>
+                        <span className=''>{attributes.acreage}</span>
+                        <span className=''>{`${address.split(',')[2]}, ${address.split(',')[3]}`}</span>
+
                     </div>
-                    <p className='text-sm text-gray-400'>
+                    <p className='text-gray-400 w-full h-[60px] text-ellipsis overflow-hidden text-sm'>
                         {description}
                     </p>
-                    <div className='flex justify-between  '>
-                        <div className='flex gap-2 items-center'>
+                    <div className='flex items-center my-5 justify-between'>
+                        <div className='flex items-center'>
                             <img src="https://phongtro123.com/images/default-user.png" alt="" className='w-[30px] h-[30px] object-cover rounded-full' />
                             <p className='text-sm text-gray-400'>{user.name}</p>
                         </div>
-                        <div className='flex gap-2 text-[14px]'>
+                        <div className='flex items-center gap-1 text-[14px]'>
                             <Button style={'px-[7px] py-[3px] bg-main rounded-md text-white'}>
                                 {`Gọi ${user.phone}`}
                             </Button>
