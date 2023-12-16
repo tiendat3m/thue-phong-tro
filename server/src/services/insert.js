@@ -7,7 +7,7 @@ import chothuematbang from '../../data/chothuematbang.json'
 import chothuephongtro from '../../data/chothuephongtro.json'
 import nhachothue from '../../data/chothuecanho.json'
 import { generateCode } from '../utils/generateCode'
-const dataBody = nhachothue.body
+const dataBody = chothuematbang.body
 const hashPassword = password => bcrypt.hashSync(password, genSaltSync(10))
 
 export const insertService = () => new Promise(async (resolve, reject) => {
@@ -27,7 +27,7 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                 labelCode,
                 address: item?.header?.address,
                 attributesId,
-                categoryCode: 'NCT',
+                categoryCode: 'CTMB',
                 description: JSON.stringify(item?.mainContent?.content),
                 userId,
                 overviewId,

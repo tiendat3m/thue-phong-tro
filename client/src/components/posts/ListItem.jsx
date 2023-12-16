@@ -42,7 +42,9 @@ const ListItem = ({ images, title, star, address, attributes, user, description 
                             <RiStarFill className='star-item' size={18} color='yellow' />
                             <RiStarFill className='star-item' size={18} color='yellow' />
                             <RiStarFill className='star-item' size={18} color='yellow' /> */}
-                            {renderStarFromNumber(star)}
+                            {renderStarFromNumber(star)?.map((el, idx) => (
+                                <span key={idx}>{el}</span>
+                            ))}
                             {title.toUpperCase()}
                         </div>
                         <div>

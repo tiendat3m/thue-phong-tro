@@ -7,14 +7,12 @@ import { useSelector } from 'react-redux'
 
 
 
-const List = ({ dispatch }) => {
-    const { posts, count } = useSelector(state => state.post)
+const List = ({ dispatch, page }) => {
+    const { posts } = useSelector(state => state.post)
     useEffect(() => {
-        // dispatch(actions.getPosts())
-        dispatch(actions.getPostsLimit(0))
-    }, [])
-    // console.log(posts.slice(0, 20))
-    console.log(count)
+        let offset = page ? +page - 1 : 0
+        dispatch(actions.getPostsLimit(offset))
+    }, [page])
     return (
         <div className='bg-white flex flex-col gap-3 shadow-md rounded-md'>
             <div className='flex justify-between px-4 pt-4'>
@@ -30,10 +28,18 @@ const List = ({ dispatch }) => {
                 ))}
             </div>
             <div className=''>
-                {posts.length > 0 && posts.slice(0, 20).map(item => (
-                    <ListItem key={item.id} images={JSON.parse(item.images.image)} title={item.title} star={+item.star} address={item.address} attributes={item.attributes} user={item.user} description={JSON.parse(item?.description).join(',')} />
+                {posts.length > 0 && posts?.map(item => (
+                    <ListItem key={item.id}
+                        images={JSON.parse(item?.images?.image)}
+                        title={item.title}
+                        star={+item.star}
+                        address={item.address}
+                        attributes={item.attributes}
+                        user={item.user}
+                        description={JSON.parse(item?.description).join('. ')} />
                 ))}
             </div>
+
         </div>
     )
 }

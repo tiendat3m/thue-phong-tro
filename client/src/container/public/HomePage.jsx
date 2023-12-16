@@ -1,7 +1,13 @@
-import React from 'react'
-import { List, Province } from '~/components'
+import React, { useEffect } from 'react'
+import { useParams, useSearchParams } from 'react-router-dom'
+import { List, Pagination, Province } from '~/components'
 import { text } from '~/utils/constants'
 const HomePage = () => {
+    const [params] = useSearchParams()
+    // console.log(params.get('page'))
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [params.get('page')])
     return (
         <div className='w-main'>
             <div className='mt-5'>
@@ -11,7 +17,8 @@ const HomePage = () => {
             <Province />
             <div className='w-full flex mt-5 gap-4'>
                 <div className='w-[70%] '>
-                    <List />
+                    <List page={params.get('page')} />
+                    <Pagination page={params.get('page')} />
                 </div>
                 <div className='w-[30%] border border-blue-500'>
                     SIde Bar

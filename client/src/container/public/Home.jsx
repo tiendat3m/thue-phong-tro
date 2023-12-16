@@ -11,6 +11,7 @@ const Home = () => {
             <Search />
             <div className='w-full flex flex-col items-center justify-center'>
                 <Outlet />
+                <div className='h-[300px]'></div>
             </div>
         </div>
     )

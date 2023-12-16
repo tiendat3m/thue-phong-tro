@@ -7,7 +7,8 @@ const App = () => {
         <div className='bg-gray-100 font-main'>
             <Routes>
                 <Route path={path.HOME} element={<Home />}>
-                    <Route path={path.HOMEPAGE} element={<HomePage />} />
+                    <Route path='*' element={<HomePage />} />
+                    <Route path={path.HOME__PAGE} element={<HomePage />} />
                     <Route path={path.LOGIN} element={<Login />} />
                     <Route path={path.CHO_THUE_CAN_HO} element={<RentalApartment />} />
                     <Route path={path.CHO_THUE_MAT_BANG} element={<RentalSpace />} />

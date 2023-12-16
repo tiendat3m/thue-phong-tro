@@ -8,4 +8,6 @@ html,body {
 }
 .star-item {
   display: inline-block;
+  margin-bottom: 5px;
+  margin-right: 2px;
 }
