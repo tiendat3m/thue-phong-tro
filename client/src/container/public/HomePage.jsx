@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
-import { List, Pagination, Province } from '~/components'
+import { useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
+import { List, Pagination, Province, SideBar } from '~/components'
 import { text } from '~/utils/constants'
 const HomePage = () => {
+    const { categories } = useSelector(state => state.app)
     const [params] = useSearchParams()
-    // console.log(params.get('page'))
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [params.get('page')])
@@ -21,7 +22,7 @@ const HomePage = () => {
                     <Pagination page={params.get('page')} />
                 </div>
                 <div className='w-[30%] border border-blue-500'>
-                    SIde Bar
+                    <SideBar categories={categories} title='Danh sách cho thuê' />
                 </div>
             </div>
         </div>
