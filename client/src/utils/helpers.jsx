@@ -47,7 +47,7 @@ export const formatVietnameseToString = (keyword) => {
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .split(" ")
-        .join("")
+        .join("-")
 }
 
 export const renderStarFromNumber = (number, size) => {

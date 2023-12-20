@@ -3,9 +3,12 @@ import cors from 'cors'
 import initRoutes from './src/routes'
 import connectDatabase from './src/config/connectDatabase'
 import { generateCode } from './src/utils/generateCode'
+import { numberToString } from './src/utils/common'
 require('dotenv').config()
 const app = express()
 
+// console.log(dataPrices, dataAreas)
+// console.log(numberToString('41m2'))
 app.use(cors({
     origin: process.env.CLIENT_URL,
     methods: ['POST', 'GET', 'PUT', 'DELETE']

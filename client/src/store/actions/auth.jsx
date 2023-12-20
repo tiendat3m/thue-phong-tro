@@ -1,10 +1,10 @@
-import { apiLogin, apiRegister } from "~/services/auth";
+import * as apis from "~/services"
 import actionTypes from "./actionsTypes";
 
 
 export const register = (payload) => async (dispatch) => {
     try {
-        const response = await apiRegister(payload)
+        const response = await apis.apiRegister(payload)
         if (response?.data.err === 0) {
             dispatch({
                 type: actionTypes.REGISTER_SUCCESS,
@@ -26,7 +26,7 @@ export const register = (payload) => async (dispatch) => {
 }
 export const login = (payload) => async (dispatch) => {
     try {
-        const response = await apiLogin(payload)
+        const response = await apis.apiLogin(payload)
         if (response?.data.err === 0) {
             dispatch({
                 type: actionTypes.LOGIN_SUCCESS,

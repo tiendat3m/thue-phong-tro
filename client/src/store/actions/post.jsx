@@ -1,10 +1,10 @@
-import { apiGetPosts, apiGetPostsLimit } from "~/services/post"
+import * as apis from "~/services"
 import actionTypes from "./actionsTypes"
 
 
 export const getPosts = () => async (dispatch) => {
     try {
-        const response = await apiGetPosts()
+        const response = await apis.apiGetPosts()
         if (response?.data.err === 0) {
             dispatch({
                 type: actionTypes.GET_POSTS,
@@ -22,7 +22,7 @@ export const getPosts = () => async (dispatch) => {
 
 export const getPostsLimit = (page) => async (dispatch) => {
     try {
-        const response = await apiGetPostsLimit(page)
+        const response = await apis.apiGetPostsLimit(page)
         // console.log(response)
         if (response?.data.err === 0) {
             dispatch({

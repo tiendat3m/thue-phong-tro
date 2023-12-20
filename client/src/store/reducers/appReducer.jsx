@@ -3,7 +3,9 @@ import actionTypes from "../actions/actionsTypes";
 
 const initState = {
     msg: '',
-    categories: []
+    categories: [],
+    prices: [],
+    areas: []
 }
 
 const appReducer = (state = initState, action) => {
@@ -12,6 +14,18 @@ const appReducer = (state = initState, action) => {
             return {
                 ...state,
                 categories: action.data || [],
+                msg: action.msg || '',
+            }
+        case actionTypes.GET_PRICES:
+            return {
+                ...state,
+                prices: action.data || [],
+                msg: action.msg || '',
+            }
+        case actionTypes.GET_AREAS:
+            return {
+                ...state,
+                areas: action.data || [],
                 msg: action.msg || '',
             }
         default:

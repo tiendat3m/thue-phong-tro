@@ -7,6 +7,8 @@ import chothuematbang from '../../data/chothuematbang.json'
 import chothuephongtro from '../../data/chothuephongtro.json'
 import nhachothue from '../../data/chothuecanho.json'
 import { generateCode } from '../utils/generateCode'
+import { dataAreas, dataPrices } from '../utils/data'
+import { numberToString } from '../utils/common'
 const dataBody = chothuematbang.body
 const hashPassword = password => bcrypt.hashSync(password, genSaltSync(10))
 
@@ -20,6 +22,8 @@ export const insertService = () => new Promise(async (resolve, reject) => {
             let overviewId = v4()
             let imagesId = v4()
             let authorId = v4()
+            let currentArea = numberToString(item?.header?.attributes?.acreage)
+            let currentPrice = numberToString(item?.header?.attributes?.price)
             await db.Post.create({
                 id: postId,
                 title: item?.header?.title,
@@ -32,6 +36,8 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                 userId,
                 overviewId,
                 imagesId,
+                priceCode: dataPrices?.find(price => price.max > currentPrice && price.min <= currentPrice)?.code,
+                areaCode: dataAreas?.find(area => area.max > currentArea && area.min <= currentArea)?.code,
                 authorId
             })
             await db.Attribute.create({
@@ -71,6 +77,28 @@ export const insertService = () => new Promise(async (resolve, reject) => {
             })
         })
         resolve('done')
+    } catch (error) {
+        reject(error)
+    }
+})
+
+export const createPricesAndAreas = () => new Promise((resolve, reject) => {
+    try {
+        dataPrices.forEach((async (item, index) => {
+            await db.Price.create({
+                code: item.code,
+                value: item.value,
+                order: index + 1
+            })
+        }))
+        dataAreas.forEach((async (item, index) => {
+            await db.Area.create({
+                code: item.code,
+                value: item.value,
+                order: index + 1
+            })
+        }))
+        resolve('OK')
     } catch (error) {
         reject(error)
     }
