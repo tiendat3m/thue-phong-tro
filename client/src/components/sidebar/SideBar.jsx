@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import SideBarItem from './SideBarItem'
 import * as actions from '../../store/actions'
 import { useSelector } from 'react-redux'
 import withBaseComponent from '~/hocs/withBaseComponent'
+import { NewPost } from '..'
 const SideBar = ({ dispatch }) => {
     const { categories, prices, areas } = useSelector(state => state.app)
     useEffect(() => {
@@ -12,10 +13,11 @@ const SideBar = ({ dispatch }) => {
     return (
         <div className='flex flex-col gap-4'>
             <SideBarItem content={categories} title='Danh mục cho thuê' />
-            <SideBarItem content={prices} title='Xem theo giá' isDouble={true} />
-            <SideBarItem content={areas} title='Xem theo diện tích' isDouble={true} />
+            <SideBarItem content={prices} title='Xem theo giá' isDouble={true} type='priceCode' />
+            <SideBarItem content={areas} title='Xem theo diện tích' isDouble={true} type='areaCode' />
+            <NewPost />
         </div>
     )
 }
 
-export default withBaseComponent(SideBar)
+export default withBaseComponent(memo(SideBar))

@@ -1,3 +1,5 @@
+import moment from "moment"
+import 'moment/locale/vi'
 import icons from "./icons"
 
 const { AiFillStar, AiOutlineStar } = icons
@@ -59,4 +61,8 @@ export const renderStarFromNumber = (number, size) => {
     // for (let i = 5; i > +number; i--) stars.push(<AiOutlineStar color="f1b400" size={size || 16} />)
 
     return stars
+}
+
+export const formatTime = (time) => {
+    return moment(time).fromNow()
 }

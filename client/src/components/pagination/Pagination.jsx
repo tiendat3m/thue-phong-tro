@@ -3,15 +3,25 @@ import { useSelector } from 'react-redux'
 import { PageNumber } from '..'
 import { GrLinkNext, GrLinkPrevious } from "react-icons/gr";
 import { arrange } from '~/utils/constants';
-const Pagination = ({ page }) => {
+import { useSearchParams } from 'react-router-dom';
+const Pagination = () => {
 
     const { count, posts } = useSelector(state => state.post)
     const [arrPage, setArrPage] = useState([])
-    const [currentPage, setCurrentPage] = useState(+page || 1)
+    const [currentPage, setCurrentPage] = useState(1)
     const [isHideEnd, setIsHideEnd] = useState(false)
     const [isHideStart, setIsHideStart] = useState(false)
+    const [searchParams] = useSearchParams()
+
     useEffect(() => {
-        let maxPage = Math.floor(count / posts.length)
+        let page = searchParams.get('page')
+        page && +page !== currentPage && setCurrentPage(+page)
+        !page && setCurrentPage(1)
+        window.scrollTo(0, 0)
+    }, [searchParams])
+
+    useEffect(() => {
+        let maxPage = Math.ceil(count / 5)
         let start = (currentPage - 1) <= 0 ? 1 : (currentPage - 1)
         let end = (currentPage + 1) > maxPage ? maxPage : (currentPage + 1)
         let temp = []

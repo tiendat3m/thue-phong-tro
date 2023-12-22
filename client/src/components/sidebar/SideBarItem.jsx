@@ -1,12 +1,12 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { memo } from 'react'
+import { Link, createSearchParams } from 'react-router-dom'
 import withBaseComponent from '~/hocs/withBaseComponent'
 import { formatVietnameseToString } from '~/utils/helpers'
 import icons from '~/utils/icons'
 
 const { MdArrowForwardIos } = icons
 
-const SideBarItem = ({ title, content, isDouble, dispatch, location, navigate }) => {
+const SideBarItem = ({ title, content, isDouble, location, navigate, type }) => {
     const formatContent = () => {
         const evenEls = content?.filter((item, index) => index % 2 === 0)
         const oddEls = content?.filter((item, index) => index % 2 !== 0)
@@ -18,6 +18,15 @@ const SideBarItem = ({ title, content, isDouble, dispatch, location, navigate })
         })
         return formatContent
     }
+    const handleFilterPrice = (code) => {
+        navigate({
+            pathname: location.pathname,
+            search: createSearchParams({
+                [type]: code,
+            }).toString()
+        })
+    }
+
     return (
         <div className='bg-white p-4 rounded-md shadow-md '>
             <h3 className='text-lg font-semibold mb-4'>{title}</h3>
@@ -30,11 +39,11 @@ const SideBarItem = ({ title, content, isDouble, dispatch, location, navigate })
             {isDouble && <div className='flex flex-col w-full'>
                 {formatContent(content)?.map((item, index) => (
                     <div key={index} className='flex items-center '>
-                        <div className='flex flex-1 items-center gap-1 border-b border-dashed hover:text-orange-500 cursor-pointer'>
+                        <div onClick={() => handleFilterPrice(item.left.code)} className='flex flex-1 items-center gap-1 border-b border-dashed hover:text-orange-500 cursor-pointer'>
                             <MdArrowForwardIos color='#B2B2B2' size={10} />
                             <p className='py-[5px] text-sm'>{item?.left.value}</p>
                         </div>
-                        <div key={item.code} className='flex flex-1 items-center gap-1 border-b border-dashed hover:text-orange-500 cursor-pointer'>
+                        <div onClick={() => handleFilterPrice(item.right.code)} key={item.code} className='flex flex-1 items-center gap-1 border-b border-dashed hover:text-orange-500 cursor-pointer'>
                             <MdArrowForwardIos color='#B2B2B2' size={10} />
                             <p className='py-[5px] text-sm'>{item?.right.value}</p>
                         </div>
@@ -45,4 +54,4 @@ const SideBarItem = ({ title, content, isDouble, dispatch, location, navigate })
     )
 }
 
-export default withBaseComponent(SideBarItem)
+export default withBaseComponent(memo(SideBarItem))

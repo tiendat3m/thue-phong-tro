@@ -6,7 +6,13 @@ export const apiGetPosts = () => axios({
 })
 
 
-export const apiGetPostsLimit = (page) => axios({
-    url: `/api/v1/post/limit?page=${page}`,
+export const apiGetPostsLimit = (query) => axios({
+    url: `/api/v1/post/limit/`,
+    method: 'get',
+    params: query
+})
+
+export const apiGetNewPosts = () => axios({
+    url: '/api/v1/post/new-post',
     method: 'get'
 })

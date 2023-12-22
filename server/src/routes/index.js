@@ -9,6 +9,7 @@ const initRoutes = (app) => {
     app.use('/api/v1/insert/', insertRouter)
     app.use('/api/v1/category/', categoryRouter)
     app.use('/api/v1/post/', postRouter)
+    app.use('/api/v1/post/new', postRouter)
     app.use('/api/v1/price/', priceRouter)
     app.use('/api/v1/area/', areaRouter)
 

@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Button, ListItem } from '..'
 import { arrange } from '~/utils/constants'
 import * as actions from '~/store/actions'
 import withBaseComponent from '~/hocs/withBaseComponent'
 import { useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 
 
-
-const List = ({ dispatch, page }) => {
+const List = ({ dispatch }) => {
+    const [searchParams] = useSearchParams()
     const { posts } = useSelector(state => state.post)
     useEffect(() => {
-        let offset = page ? +page - 1 : 0
-        dispatch(actions.getPostsLimit(offset))
-    }, [page])
+        let params = []
+        for (let entry of searchParams.entries()) params.push(entry)
+        let searchParamsObject = {}
+        params?.map(i => {
+            searchParamsObject = { ...searchParamsObject, [i[0]]: i[1] }
+        })
+        dispatch(actions.getPostsLimit(searchParamsObject))
+    }, [searchParams])
     return (
         <div className='bg-white flex flex-col gap-3 shadow-md rounded-md'>
             <div className='flex justify-between px-4 pt-4'>
