@@ -6,7 +6,6 @@ import * as actions from '~/store/actions'
 import withBaseComponent from '~/hocs/withBaseComponent'
 const NewPost = ({ dispatch }) => {
     const { newPosts } = useSelector(state => state.post)
-    console.log(newPosts)
     useEffect(() => {
         dispatch(actions.getNewPosts())
     }, [])

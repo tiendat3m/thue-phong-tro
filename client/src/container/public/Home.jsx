@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { Header, Navigation } from '~/components'
+import { Contact, Header, Intro, Navigation } from '~/components'
 import { Search } from '.'
 
 const Home = () => {
@@ -11,8 +11,10 @@ const Home = () => {
             <Search />
             <div className='w-full flex flex-col items-center justify-center'>
                 <Outlet />
-                <div className='h-[300px]'></div>
             </div>
+            <Intro />
+            <Contact />
+
         </div>
     )
 }
