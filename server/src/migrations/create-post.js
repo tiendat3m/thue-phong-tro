@@ -48,6 +48,9 @@ module.exports = {
             areaCode: {
                 type: Sequelize.STRING
             },
+            provinceCode: {
+                type: Sequelize.STRING
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

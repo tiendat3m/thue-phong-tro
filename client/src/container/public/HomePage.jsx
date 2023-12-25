@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { memo, useEffect } from 'react'
 import { List, Pagination, Province, SideBar } from '~/components'
+import withBaseComponent from '~/hocs/withBaseComponent'
+import * as actions from '../../store/actions'
 import { text } from '~/utils/constants'
-const HomePage = () => {
+const HomePage = ({ dispatch }) => {
+    useEffect(() => {
+        dispatch(actions.getPrices())
+        dispatch(actions.getAreas())
+        dispatch(actions.getProvinces())
+    }, [])
     return (
         <div className='w-main'>
             <div className='mt-5'>
@@ -22,4 +29,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage
+export default withBaseComponent(memo(HomePage))

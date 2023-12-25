@@ -1,5 +1,5 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import path from './utils/path'
 import { Home, HomePage, Login, RentalApartment, RentalHouse, RentalMotel, RentalSpace } from './container/public'
 const App = () => {

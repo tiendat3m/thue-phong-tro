@@ -1,15 +1,14 @@
-import React, { memo, useEffect } from 'react'
+import React, { memo } from 'react'
 import SideBarItem from './SideBarItem'
-import * as actions from '../../store/actions'
 import { useSelector } from 'react-redux'
 import withBaseComponent from '~/hocs/withBaseComponent'
 import { NewPost } from '..'
-const SideBar = ({ dispatch }) => {
+const SideBar = () => {
     const { categories, prices, areas } = useSelector(state => state.app)
-    useEffect(() => {
-        dispatch(actions.getPrices())
-        dispatch(actions.getAreas())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(actions.getPrices())
+    //     dispatch(actions.getAreas())
+    // }, [])
     return (
         <div className='flex flex-col gap-4'>
             <SideBarItem content={categories} title='Danh mục cho thuê' />

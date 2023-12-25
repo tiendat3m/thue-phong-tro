@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { ProvinceBtn } from '..'
 import { location } from '~/utils/constants'
 
@@ -12,4 +12,4 @@ const Province = () => {
     )
 }
 
-export default Province
+export default memo(Province)

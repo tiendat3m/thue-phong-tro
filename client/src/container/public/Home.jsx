@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Contact, Header, Intro, Navigation } from '~/components'
 import { Search } from '.'
@@ -14,9 +14,8 @@ const Home = () => {
             </div>
             <Intro />
             <Contact />
-
         </div>
     )
 }
 
-export default Home
+export default memo(Home)
