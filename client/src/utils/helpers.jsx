@@ -66,3 +66,15 @@ export const renderStarFromNumber = (number, size) => {
 export const formatTime = (time) => {
     return moment(time).fromNow()
 }
+
+export const getNumbersPrice = (string) => string.split(' ').map(item => +item).filter(item => !item === false)
+export const getNumbersArea = (string) => string.split(' ').map(item => +item.match(/\d+/)).filter(item => item !== 0)
+
+export const convert100toTarget = (percent) => {
+    return (Math.ceil(Math.round((percent * 1.5)) / 5) * 5) / 10
+}
+
+// export const convert15to100 = (percent) => {
+//     return Math.floor(percent / 15) * 100
+// }
+
