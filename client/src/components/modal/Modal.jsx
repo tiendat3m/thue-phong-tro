@@ -1,19 +1,24 @@
 import React, { memo, useEffect, useState } from 'react'
 import { FaArrowLeft } from "react-icons/fa6";
-import { getNumbersArea, getNumbersPrice } from '~/utils/helpers';
+import { getAreaGaps, getNumbersArea, getNumbersPrice, getPriceGaps } from '~/utils/helpers';
 
-const Modal = ({ setIsShowModal, content, name }) => {
-    const [percent1, setPercent1] = useState(0)
-    const [percent2, setPercent2] = useState(100)
+const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax }) => {
+    console.log(arrMinMax)
+    //name === 'price' ? arrMinMax?.priceArr[0] : name === 'area' ? arrMinMax?.areaArr[0] : 
+    const [percent1, setPercent1] = useState(name === 'price' && arrMinMax?.priceArr ? arrMinMax?.priceArr[0] : name === 'area' && arrMinMax?.areaArr ? arrMinMax?.areaArr[0] : 0)
+    const [percent2, setPercent2] = useState(name === 'price' && arrMinMax.priceArr ? arrMinMax?.priceArr[1] : name === 'area' && arrMinMax?.areaArr ? arrMinMax?.areaArr[1] : 100)
     const [activeEl, setActiveEl] = useState('')
     useEffect(() => {
         const activeTrackEl = document.getElementById('track-active')
-        if (percent2 <= percent1) {
-            activeTrackEl.style.left = `${percent2}%`
-            activeTrackEl.style.right = `${100 - (+percent1)}%`
-        } else {
-            activeTrackEl.style.left = `${percent1}%`
-            activeTrackEl.style.right = `${100 - (+percent2)}%`
+        // console.log(activeTrackEl)
+        if (activeTrackEl) {
+            if (percent2 <= percent1) {
+                activeTrackEl.style.left = `${percent2}%`
+                activeTrackEl.style.right = `${100 - (+percent1)}%`
+            } else {
+                activeTrackEl.style.left = `${percent1}%`
+                activeTrackEl.style.right = `${100 - (+percent2)}%`
+            }
         }
     }, [percent1, percent2])
     const handleClickTrack = (e, value) => {
@@ -60,6 +65,26 @@ const Modal = ({ setIsShowModal, content, name }) => {
         }
         setActiveEl(code)
     }
+    const handleBeforeSubmit = (e) => {
+        let min = percent1 < percent2 ? percent1 : percent2
+        let max = percent1 < percent2 ? percent2 : percent1
+        let arrMinMax = [convert100toTarget(min), convert100toTarget(max)]
+        const gaps = name === 'price'
+            ? getPriceGaps(arrMinMax, content)
+            : name === 'area'
+                ? getAreaGaps(arrMinMax, content)
+                : []
+        handleSubmit(e, {
+            [`${name}Code`]: gaps.map(item => item.code),
+            [name]: `${convert100toTarget(min)} - ${convert100toTarget(max)} ${name === 'price' ? 'triệu' : 'm2'}`
+        }, {
+            [`${name}Arr`]: [min, max]
+        })
+    }
+
+    // const handleSubmit = (query) => {
+    //     // console.log(query)
+    // }
 
     return (
         <div
@@ -75,7 +100,7 @@ const Modal = ({ setIsShowModal, content, name }) => {
                     setIsShowModal(true)
                 }
                 }
-                className='bg-white rounded-md w-2/5'
+                className='bg-white rounded-md w-2/5 h-[500px] relative'
             >
                 <div className='h-[45px] flex px-4 items-center border-b-[1px] border-gray-300'>
                     <span className='cursor-pointer' onClick={e => {
@@ -88,7 +113,16 @@ const Modal = ({ setIsShowModal, content, name }) => {
                 {(name === 'category' || name === 'province') && <div className='flex flex-col justify-center px-4 '>
                     {content?.map(item => (
                         <span key={item.code} className='py-2 flex gap-2 border-b-[1px] border-gray-200 '>
-                            <input type="radio" name={name} id={item.code} value={item.value.code} className='cursor-pointer' />
+                            <input
+                                type="radio"
+                                name={name}
+                                id={item.code}
+                                defaultChecked={item.code === queries[`${name}Code`] ? true : false}
+                                value={item.value.code}
+                                className='cursor-pointer'
+                                onClick={(e) => handleSubmit(e, { [name]: item.value, [`${name}Code`]: item.code })}
+
+                            />
                             <label htmlFor={item.code}>{item.value}</label>
                         </span>
                     ))}
@@ -114,7 +148,10 @@ const Modal = ({ setIsShowModal, content, name }) => {
                             step={1}
                             type="range"
                             className='w-full appearance-none absolute top-0 bottom-0 pointer-events-none   '
-                            onChange={(e) => setPercent1(+e.target.value)}
+                            onChange={(e) => {
+                                setPercent1(+e.target.value)
+                                activeEl && setActiveEl("")
+                            }}
                             value={percent1}
                         />
                         <input
@@ -123,7 +160,11 @@ const Modal = ({ setIsShowModal, content, name }) => {
                             step={1}
                             type="range"
                             className='w-full appearance-none absolute top-0 bottom-0 pointer-events-none  '
-                            onChange={(e) => setPercent2(+e.target.value)}
+                            onChange={(e) => {
+                                setPercent2(+e.target.value)
+                                activeEl && setActiveEl("")
+
+                            }}
                             value={percent2}
                         />
                         <div className='mt-2 absolute z-30 top-4 left-0 right-0 flex justify-between items-center'>
@@ -134,7 +175,7 @@ const Modal = ({ setIsShowModal, content, name }) => {
                             <span onClick={e => {
                                 e.stopPropagation()
                                 handleClickTrack(e, 100)
-                            }} className='mr-[-20px] cursor-pointer'>15 triệu+</span>
+                            }} className='mr-[-20px] cursor-pointer'>{name === 'price' ? '15 triệu+' : '90+'}</span>
                         </div>
                     </div>
                     <div className='mt-20'>
@@ -152,6 +193,13 @@ const Modal = ({ setIsShowModal, content, name }) => {
                         </div>
                     </div>
                 </div>}
+                {(name === 'price' || name === 'area') && <button
+                    type='button'
+                    className='uppercase px-3 w-full absolute bottom-0 text-[16px] bg-amber-400 font-semibold text-black h-[50px] rounded-bl-md rounded-br-md  '
+                    onClick={handleBeforeSubmit}
+                >
+                    Áp dụng
+                </button>}
             </div>
         </div>
     )

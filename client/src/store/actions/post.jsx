@@ -21,7 +21,6 @@ export const getPosts = () => async (dispatch) => {
 }
 
 export const getPostsLimit = (query) => async (dispatch) => {
-    // console.log(query)
     try {
         const response = await apis.apiGetPostsLimit(query)
         // console.log(response)
