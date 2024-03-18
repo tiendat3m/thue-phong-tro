@@ -12,11 +12,15 @@ const PageNumber = ({ text, currentPage, navigate, location, icon, setCurrentPag
         let params = []
         searchParams.append('page', +text)
         for (let entry of entries) params.push(entry)
-        let a = {}
+        let searchParamsObject = {}
         params?.map(i => {
-            a = { ...a, [i[0]]: i[1] }
+            if (Object.keys(searchParamsObject)?.some(item => item === i[0] && item !== 'page')) {
+                searchParamsObject[i[0]] = [...searchParamsObject[i[0]], i[1]]
+            } else {
+                searchParamsObject = { ...searchParamsObject, [i[0]]: [i[1]] }
+            }
         })
-        return a
+        return searchParamsObject
     }
     const handleChangePage = () => {
         if (!(text === '...')) {

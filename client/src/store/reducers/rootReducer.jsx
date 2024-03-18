@@ -1,11 +1,11 @@
 import userReducer from "./userReducer";
 import authReducer from "./authReducer";
 import postReducer from "./postReducer";
+import appReducer from "./appReducer";
 import { combineReducers } from "redux"
+import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
-import { persistReducer } from "redux-persist";
-import appReducer from "./appReducer";
 
 const commonConfig = {
     storage,

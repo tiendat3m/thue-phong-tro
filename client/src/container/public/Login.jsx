@@ -10,7 +10,7 @@ import { validate } from '~/utils/helpers'
 const Login = ({ location, dispatch, navigate }) => {
     const [isRegister, setIsRegister] = useState(location.state?.flag)
     const { isLoggedIn, msg, update } = useSelector(state => state.auth)
-    console.log(msg)
+    // console.log(msg)
     const [invalidFields, setInvalidFields] = useState('')
     const [payload, setPayload] = useState({
         name: '',

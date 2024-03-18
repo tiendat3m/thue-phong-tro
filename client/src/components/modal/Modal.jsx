@@ -2,9 +2,7 @@ import React, { memo, useEffect, useState } from 'react'
 import { FaArrowLeft } from "react-icons/fa6";
 import { getAreaGaps, getNumbersArea, getNumbersPrice, getPriceGaps } from '~/utils/helpers';
 
-const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax }) => {
-    console.log(arrMinMax)
-    //name === 'price' ? arrMinMax?.priceArr[0] : name === 'area' ? arrMinMax?.areaArr[0] : 
+const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax, defaultText }) => {
     const [percent1, setPercent1] = useState(name === 'price' && arrMinMax?.priceArr ? arrMinMax?.priceArr[0] : name === 'area' && arrMinMax?.areaArr ? arrMinMax?.areaArr[0] : 0)
     const [percent2, setPercent2] = useState(name === 'price' && arrMinMax.priceArr ? arrMinMax?.priceArr[1] : name === 'area' && arrMinMax?.areaArr ? arrMinMax?.areaArr[1] : 100)
     const [activeEl, setActiveEl] = useState('')
@@ -111,6 +109,19 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
                     {/* <span></span> */}
                 </div>
                 {(name === 'category' || name === 'province') && <div className='flex flex-col justify-center px-4 '>
+                    <span className='py-2 flex gap-2 border-b-[1px] border-gray-200 '>
+                        <input
+                            type="radio"
+                            name={name}
+                            id='default'
+                            defaultChecked={!queries[`${name}Code`] ? true : false}
+                            value={defaultText || ''}
+                            className='cursor-pointer'
+                            onClick={(e) => handleSubmit(e, { [name]: defaultText, [`${name}Code`]: null })}
+
+                        />
+                        <label htmlFor={'default'}>{defaultText}</label>
+                    </span>
                     {content?.map(item => (
                         <span key={item.code} className='py-2 flex gap-2 border-b-[1px] border-gray-200 '>
                             <input
