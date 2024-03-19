@@ -41,7 +41,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
         let target = name === 'price' ? 15 : name === 'area' ? 90 : 1
         return Math.floor((percent / target) * 100)
     }
-    const handlePrice = (code, value) => {
+    const handleActive = (code, value) => {
         let arrMaxMin = name === 'price' ? getNumbersPrice(value) : getNumbersArea(value)
         if (arrMaxMin.length === 1) {
             if (arrMaxMin[0] === 1) {
@@ -67,13 +67,13 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
         let min = percent1 < percent2 ? percent1 : percent2
         let max = percent1 < percent2 ? percent2 : percent1
         let arrMinMax = [convert100toTarget(min), convert100toTarget(max)]
-        const gaps = name === 'price'
-            ? getPriceGaps(arrMinMax, content)
-            : name === 'area'
-                ? getAreaGaps(arrMinMax, content)
-                : []
+        // const gaps = name === 'price'
+        //     ? getPriceGaps(arrMinMax, content)
+        //     : name === 'area'
+        //         ? getAreaGaps(arrMinMax, content)
+        //         : []
         handleSubmit(e, {
-            [`${name}Code`]: gaps.map(item => item.code),
+            [`${name}Number `]: arrMinMax,
             [name]: `${convert100toTarget(min)} - ${convert100toTarget(max)} ${name === 'price' ? 'triệu' : 'm2'}`
         }, {
             [`${name}Arr`]: [min, max]
@@ -195,7 +195,7 @@ const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax
                             {content?.map(item => (
                                 <span
                                     key={item.code}
-                                    onClick={() => handlePrice(item.code, item.value)}
+                                    onClick={() => handleActive(item.code, item.value)}
                                     className={`bg-gray-100 rounded-md py-[5px] px-[15px] text-sm cursor-pointer ${item.code === activeEl ? 'bg-main text-white' : ''}`}
                                 >
                                     {name === 'price' ? `${item.value} đồng` : item.value}

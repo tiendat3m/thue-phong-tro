@@ -29,13 +29,13 @@ const Pagination = () => {
             temp.push(i)
         }
         setArrPage(temp)
-        currentPage <= 2 ? setIsHideStart(true) : setIsHideStart(false)
+        currentPage < 3 ? setIsHideStart(true) : setIsHideStart(false)
         currentPage >= maxPage - 1 ? setIsHideEnd(true) : setIsHideEnd(false)
     }, [count, posts, currentPage])
     return (
         <div className='flex justify-center gap-3 py-5'>
-            {!isHideStart && <PageNumber icon={<GrLinkPrevious />} setCurrentPage={setCurrentPage} text={1} />}
-            {!isHideStart && <PageNumber text={'...'} />}
+            {!isHideStart && <PageNumber setCurrentPage={setCurrentPage} text={1} />}
+            {(!isHideStart && currentPage !== 3) && <PageNumber text={'...'} />}
             {arrange?.length > 0 && arrPage.map(item => (
                 <PageNumber key={item} text={item} setCurrentPage={setCurrentPage} currentPage={currentPage} />
             ))}

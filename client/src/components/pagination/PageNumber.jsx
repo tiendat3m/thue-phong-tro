@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { createSearchParams, useSearchParams } from 'react-router-dom'
 import withBaseComponent from '~/hocs/withBaseComponent'
 
-const notActive = 'w-[45px] h-[45px] flex items-center justify-center hover:bg-gray-200 rounded-md cursor-pointer'
+const notActive = 'w-[45px] h-[45px] flex items-center justify-center hover:opacity-70 rounded-md cursor-pointer bg-white'
 const active = 'w-[45px] h-[45px] flex items-center justify-center bg-[#e13427] text-white rounded-md'
 
 const PageNumber = ({ text, currentPage, navigate, location, icon, setCurrentPage, type }) => {
