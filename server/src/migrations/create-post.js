@@ -51,6 +51,12 @@ module.exports = {
             provinceCode: {
                 type: Sequelize.STRING
             },
+            priceNumber: {
+                type: Sequelize.FLOAT
+            },
+            areaNumber: {
+                type: Sequelize.FLOAT
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE

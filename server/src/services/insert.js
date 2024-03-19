@@ -8,7 +8,7 @@ import chothuephongtro from '../../data/chothuephongtro.json'
 import nhachothue from '../../data/chothuecanho.json'
 import { generateCode } from '../utils/generateCode'
 import { dataAreas, dataPrices } from '../utils/data'
-import { numberToString } from '../utils/common'
+import { numberToString, numberToStringV2 } from '../utils/common'
 const dataBody = [
     {
         body: chothuephongtro.body,
@@ -68,7 +68,9 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                     priceCode: dataPrices?.find(price => price.max > currentPrice && price.min <= currentPrice)?.code,
                     areaCode: dataAreas?.find(area => area.max > currentArea && area.min <= currentArea)?.code,
                     provinceCode,
-                    authorId
+                    authorId,
+                    areaNumber: numberToStringV2(item?.header?.attributes?.acreage),
+                    priceNumber: numberToStringV2(item?.header?.attributes?.price)
                 })
                 await db.Attribute.create({
                     id: attributesId,
