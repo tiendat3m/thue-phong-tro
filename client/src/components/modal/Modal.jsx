@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
 import { FaArrowLeft } from "react-icons/fa6";
-import { getAreaGaps, getNumbersArea, getNumbersPrice, getPriceGaps } from '~/utils/helpers';
+import { getNumbersArea, getNumbersPrice } from '~/utils/helpers';
 
 const Modal = ({ setIsShowModal, content, name, handleSubmit, queries, arrMinMax, defaultText }) => {
     const [percent1, setPercent1] = useState(name === 'price' && arrMinMax?.priceArr ? arrMinMax?.priceArr[0] : name === 'area' && arrMinMax?.areaArr ? arrMinMax?.areaArr[0] : 0)

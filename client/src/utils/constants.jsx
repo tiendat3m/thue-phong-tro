@@ -1,3 +1,5 @@
+import icons from "./icons"
+
 export const text = {
     HOME_TITLE: 'Tìm kiếm chỗ thuê ưng ý',
     HOME_DESCRIPTION: 'Kênh thông tin Phòng trọ số 1 Việt Nam - Website đăng tin cho thuê phòng trọ, nhà nguyên căn, căn hộ, ở ghép nhanh, hiệu quả với 100.000+ tin đăng và 2.500.000 lượt xem mỗi tháng.'
@@ -83,3 +85,29 @@ export const dataContact = {
         },
     ]
 }
+
+
+const { TbPencilPlus, FaRegUserCircle, FaClipboardList } = icons
+
+
+export const menuBar = [
+    {
+        id: 1,
+        text: 'Đăng tin cho thuê',
+        path: 'system/create-new',
+        icon: <TbPencilPlus size={16} />
+    },
+    {
+        id: 2,
+        text: 'Quản lí tin đăng',
+        path: 'system/manage-post',
+        icon: <FaClipboardList size={16} />
+    },
+    {
+        id: 3,
+        text: 'Thông tin tài khoản',
+        path: 'system/profile',
+        icon: <FaRegUserCircle size={16} />
+    },
+
+]

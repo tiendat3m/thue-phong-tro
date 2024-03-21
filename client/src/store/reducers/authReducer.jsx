@@ -37,7 +37,9 @@ const authReducer = (state = initState, action) => {
                 ...state,
                 isLoggedIn: false,
                 token: null,
-                msg: ''
+                msg: '',
+                update: !state.update
+
             }
         default:
             return state;

@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
     auth: persistReducer(authConfig, authReducer),
     user: userReducer,
     post: postReducer,
-    app: appReducer
+    app: appReducer,
 })
 
 export default rootReducer

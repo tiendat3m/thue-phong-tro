@@ -41,13 +41,13 @@ const Search = ({ navigate, location }) => {
         let queryCodesObject = {}
         queryCodes.forEach(item => { queryCodesObject[item[0]] = item[1] })
         const queryText = Object.entries(queries).filter(item => !item[0].includes('Code') || !item[0].includes('Number'))
-        console.log(queries)
+        // console.log(queries)
         let queryTextObject = {}
         queryText.forEach(item => {
             queryTextObject[item[0]] = item[1]
         })
 
-        let titleSearch = `${queryTextObject.category ? queryTextObject.category : 'Cho thuê tất cả '}${queryTextObject.province ? ` tỉnh ${queryTextObject.province}` : ''} ${queryTextObject.price ? `giá ${queryTextObject.price}` : ''}${queryTextObject.area ? ` diện tích ${queryTextObject.area}` : ''}`
+        let titleSearch = `${queryTextObject.category ? queryTextObject.category : 'Cho thuê tất cả '} ${queryTextObject.province ? ` tỉnh ${queryTextObject.province}` : ''} ${queryTextObject.price ? `giá ${queryTextObject.price}` : ''}${queryTextObject.area ? ` diện tích ${queryTextObject.area}` : ''}`
 
         // console.log(titleSearch)
 
